@@ -24,7 +24,7 @@ export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [galleryItems, setGalleryItems] = useState([]);
   const [galleryPage, setGalleryPage] = useState(1);
-  const [totalHits, setTotalHits] = useState(0);
+  const [, setTotalHits] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
