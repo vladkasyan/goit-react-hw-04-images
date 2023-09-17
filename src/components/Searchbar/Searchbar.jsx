@@ -1,55 +1,54 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { SearchBars, SearchForm, SearchButton, SearchButtonLabel, SearchInput } from './Searchbar.module';
+import {
+  SearchBars,
+  SearchForm,
+  SearchButton,
+  SearchButtonLabel,
+  SearchInput,
+} from './Searchbar.module';
 
-export default class SearchBar extends Component {
-    state = {
-        searchQuery: ``
-    };
+export const SearchBar = ({ onSubmit }) => {
+  // state = {
+  //     searchQuery: ``
+  // };
+  const [searchQuery, setsearchQuery] = useState('');
 
-    SubmitForm = event => {
-        const searchQuery = this.state.searchQuery.trim()
-        event.preventDefault()
+  const SubmitForm = event => {
+    event.preventDefault();
+    const trimSearchQuery = searchQuery.trim();
 
-
-        if (searchQuery.trim() === "") {
-            toast.info('Please, enter search word!');
-            return
-        }
-
-        this.props.onSubmit(searchQuery);
-    
-        this.setState({ searchQuery: '', galleryPage: 1, galleryItems: [], isButtonShow: false });
+    if (trimSearchQuery === '') {
+      toast.info('Please, enter search word!');
+      return;
     }
 
-    handleQueryChange = ({ currentTarget: { value } }) => {
-        this.setState({ searchQuery: value.toLowerCase() });
-      };
+    onSubmit(trimSearchQuery);
+    setsearchQuery('');
+  };
 
-    render() {
-        const {searchQuery} = this.state
-        return (
-            <SearchBars>
-    <SearchForm onSubmit={this.SubmitForm}>
-    <SearchButton type="submit">
-        <SearchButtonLabel>Search</SearchButtonLabel>
-    </SearchButton>
+  const handleQueryChange = ({ currentTarget: { value } }) => {
+    setsearchQuery(value.toLowerCase());
+  };
 
-    <SearchInput
-        type="text"
-        autocomplete="off"
-        autoFocus
-        placeholder="Search images and photos"
-        onChange={this.handleQueryChange}
-        name="searchQuery"
-        value={searchQuery}
-    />
-    </SearchForm>
-</SearchBars>
-        )
-    }
+  return (
+    <SearchBars>
+      <SearchForm onSubmit={SubmitForm}>
+        <SearchButton type="submit">
+          <SearchButtonLabel>Search</SearchButtonLabel>
+        </SearchButton>
 
-}
-    
-
+        <SearchInput
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={handleQueryChange}
+          name="searchQuery"
+          value={searchQuery}
+        />
+      </SearchForm>
+    </SearchBars>
+  );
+};
