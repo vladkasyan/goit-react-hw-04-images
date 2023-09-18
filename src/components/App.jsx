@@ -11,16 +11,6 @@ import { Loader } from './Loader/Loader';
 const postApiService = new PostsApiService();
 
 export const App = () => {
-  // state = {
-  //   searchQuery: ``,
-  //   galleryItems: [],
-  //   galleryPage: 1,
-
-  //   loading: false,
-  //   isButtonShow: false,
-  //   error: false,
-  // };
-
   const [searchQuery, setSearchQuery] = useState('');
   const [galleryItems, setGalleryItems] = useState([]);
   const [galleryPage, setGalleryPage] = useState(1);
@@ -62,8 +52,9 @@ export const App = () => {
             ...newData,
           ]);
           setTotalHits(data.totalHits);
+          setIsButtonShow(galleryPage <= Math.ceil(data.totalHits / 12));
         })
-        .finally(setLoading(false), setIsButtonShow(true), setError(false));
+        .finally(setLoading(false));
     };
     fetchGalleryItems(searchQuery, galleryPage);
   }, [searchQuery, galleryPage]);
