@@ -52,7 +52,7 @@ export const App = () => {
             ...newData,
           ]);
           setTotalHits(data.totalHits);
-          setIsButtonShow(galleryPage <= Math.ceil(data.totalHits / 12));
+          setIsButtonShow(galleryPage < Math.ceil(data.totalHits / 12));
         })
         .finally(setLoading(false));
     };
